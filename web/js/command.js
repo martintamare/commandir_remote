@@ -1,6 +1,7 @@
 // Global power option, needed to tune remote, set in my_password.js
 remote_code = freebox_code;
 
+// function that trigger power of different element
 function handle_power(div_id){
 	key = div_id.substr(6);
 	if(key=="freebox")
@@ -17,6 +18,8 @@ function handle_power(div_id){
 		url: query
 	});		
 }
+
+// test for handling xbmc
 function handle_xbmc(div_id){
 	query="";
 	if(div_id=="start"){
@@ -29,8 +32,8 @@ function handle_xbmc(div_id){
 		_XBMCHOST = "http://192.168.20.150:9090/jsonrpc";
 
 		$.ajax({
-			username: 'martin',
-			password: '111aaa',
+			username: xbmc_user,
+			password: xbmc_password,
 			dataType: 'jsonp',
 			data: _data,
 			jsonp: 'jsonp_callback',
@@ -52,6 +55,9 @@ function handle_xbmc(div_id){
 		});
 	}
 }
+
+// main page, button that switch element according to the use
+// Found trick to always wake up the audio and tv. Need to do the same for freebox
 function handle_switching(div_id){
 	key = div_id.substr(2);
 	if(key=="freebox")
@@ -71,7 +77,8 @@ function handle_switching(div_id){
 				})
 			}
 		});
-
+		// TODO, find trick to wake up always wake up freebox !
+		
 	}else if(key=="xbmc"){
 		// TV ON
 		$.ajax({
@@ -82,17 +89,56 @@ function handle_switching(div_id){
 		$.ajax({
 			url: "../cgi-bin/yamaha_on.cgi",
 			success: function(){
-				// HDMI1
+				// HDMI3
 				$.ajax({
 					url: "../cgi-bin/hdmi3.cgi"
 				})
 			}
 		});
+		// TODO, launch XBMC !
+		
 	}else if(key=="ps3"){
+		// TV ON
+		$.ajax({
+			url: "../cgi-bin/tv_on.cgi"
+		});
 
+		// AMPLI ON
+		$.ajax({
+			url: "../cgi-bin/yamaha_on.cgi",
+			success: function(){
+				// HDMI2
+				$.ajax({
+					url: "../cgi-bin/hdmi2.cgi"
+				})
+			}
+		});		
+	}else if(key=="dock"){
+		// AMPLI ON
+		$.ajax({
+			url: "../cgi-bin/yamaha_on.cgi",
+			success: function(){
+				// AV5
+				$.ajax({
+					url: "../cgi-bin/av5.cgi"
+				})
+			}
+		});
+	}else if(key=="airplay"){
+		// AMPLI ON
+		$.ajax({
+			url: "../cgi-bin/yamaha_on.cgi",
+			success: function(){
+				// AUDIO2
+				$.ajax({
+					url: "../cgi-bin/audio2.cgi"
+				})
+			}
+		});
 	}
 }
 
+// Emulate freebox button
 function fire_freebox_event(div_id){
 	key = div_id.substr(2);
 	length = key.length;
@@ -130,7 +176,7 @@ $(document).ready(function() {
 		event.stopPropagation();
 	});
 
-	// switch class, when tapping on every onglet
+	// switch class, for base page !
 	$(".switch").live('click', function(event) {
 		handle_switching(event.currentTarget.id);
 		event.stopPropagation();
@@ -142,7 +188,7 @@ $(document).ready(function() {
 		event.stopPropagation();
 	});
 
-	// Init handler for power option
+	// Init handler for yamaha option
 	$(".ampli").live('click', function(event) {
 		query = "../cgi-bin/" + event.currentTarget.id + ".cgi"
 		$.ajax({

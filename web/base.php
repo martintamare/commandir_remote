@@ -16,9 +16,9 @@
 			<a href="power.html" data-icon="gear" data-rel="dialog" data-transition="pop" class="ui-btn-right">Power Options</a> 
 			<div data-role="navbar">
 				<ul> 
-					<li><a href="freebox.php" class="switch" id="s_freebox">Freebox</a></li> 
-					<li><a href="ampli.php" class="switch" id="">Ampli</a></li> 
-					<li><a href="xbmc.php" class="switch" id="s_xbmc">XBMC</a></li>
+					<li><a href="freebox.php" id="s_freebox">Freebox</a></li> 
+					<li><a href="ampli.php" id="">Ampli</a></li> 
+					<li><a href="xbmc.php" id="s_xbmc">XBMC</a></li>
 				</ul> 
 			</div><!-- /navbar --> 
 		</div><!-- /header -->
