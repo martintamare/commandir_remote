@@ -1,7 +1,0 @@
-Several folders here :
-
-- ir_codes : several ir_code i recorded using commandir, specific to a samsung TV, a yamaha RXv465 and a Freebox v5
-- scripts : cgi-bin used for launching ir_codes from web pages
-- web : web pages, using jquery mobile
-
-Still in construction, want to improve my XBMC page ;)
